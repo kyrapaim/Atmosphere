@@ -15,3 +15,7 @@ add_executable(Atmosphere src/main.cpp
         src/MergeSort.cpp
         src/Scoring.cpp
 )
+
+target_include_directories(Atmosphere PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)

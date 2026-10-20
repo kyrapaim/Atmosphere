@@ -1,0 +1,15 @@
+# CLion build directories
+cmake-build-*/
+
+# Original large datasets
+*.h5
+*.hdf5
+
+# Python temporary files
+__pycache__/
+*.pyc
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db

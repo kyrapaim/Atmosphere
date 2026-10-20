@@ -1,6 +1,4 @@
-//
-// Created by kyrap on 10/20/2026.
-//
+// declares compatibility scoring function between songs and weather
 
 #ifndef ATMOSPHERE_SCORING_H
 #define ATMOSPHERE_SCORING_H
