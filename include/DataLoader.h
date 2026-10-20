@@ -1,0 +1,8 @@
+//
+// Created by kyrap on 10/20/2026.
+//
+
+#ifndef ATMOSPHERE_DATALOADER_H
+#define ATMOSPHERE_DATALOADER_H
+
+#endif //ATMOSPHERE_DATALOADER_H
