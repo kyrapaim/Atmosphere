@@ -12,5 +12,4 @@ std::vector<Song> loadSongs(const std::string& fileName);
 std::vector<WeatherProfile> loadWeather(const std::string& fileName);
 
 
-
 #endif //ATMOSPHERE_DATALOADER_H

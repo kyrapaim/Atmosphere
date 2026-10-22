@@ -3,13 +3,23 @@
 #define ATMOSPHERE_WEATHER_H
 #pragma once
 #include <string>
+#include <vector>
 
 struct WeatherProfile {
     std::string city;
-    std::string date;
+    std::string state;
+    std::string month;
 
-    int temperature = 0;
+    double temperature = 0.0;
     double precipitation = 0.0;
     double windSpeed = 0.0;
 };
+
+
+std::vector<WeatherProfile> calculateMonthlyAverages(const std::vector<WeatherProfile>& weatherProfiles);
+
+std::vector<std::string> getAvailableCities(const std::vector<WeatherProfile>& monthlyAverages);
+
+const WeatherProfile* findWeatherProfile(const std::vector<WeatherProfile>& monthlyAverages, const std::string& city, const std::string& state, const std::string& month);
+
 #endif //ATMOSPHERE_WEATHER_H

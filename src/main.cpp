@@ -4,7 +4,6 @@
 using namespace std;
 
 int main() {
-
     try {
         vector<Song> songs =
             loadSongs("data/music_100k.csv");
@@ -29,5 +28,74 @@ int main() {
         return 1;
     }
 
+    cout << endl;
+    // Load weather data
+    vector<WeatherProfile> weathers = loadWeather("data/weather.csv");
+
+    // Check how many weather profiles were loaded
+    cout << "Total weather profiles: " << weathers.size() << endl;
+
+    // Print the first 5 weather profiles
+    for (size_t i = 0; i < 5 && i < weathers.size(); i++) {
+        cout << "\nWeather Profile " << i + 1 << endl;
+
+        cout << "City: " << weathers[i].city << endl;
+        cout << "State: " << weathers[i].state << endl;
+        cout << "Month: " << weathers[i].month << endl;
+        cout << "Temperature: " << weathers[i].temperature << endl;
+        cout << "Precipitation: " << weathers[i].precipitation << endl;
+        cout << "Wind Speed: " << weathers[i].windSpeed << endl;
+
+    }
+
+    cout << endl;
+
+    vector<WeatherProfile> weather = loadWeather("data/weather.csv");
+
+    vector<WeatherProfile> monthlyAverages = calculateMonthlyAverages(weather);
+
+    cout << "Weekly reports: " << weather.size() << endl;
+    cout << "Monthly profiles: " << monthlyAverages.size() << endl;
+
+    for (int i = 0; i < 5 && i < monthlyAverages.size(); i++) {
+        const WeatherProfile& profile = monthlyAverages[i];
+
+        cout << profile.city << ", " << profile.state
+             << " - " << profile.month << endl;
+
+        cout << "Temperature: " << profile.temperature << endl;
+        cout << "Precipitation: " << profile.precipitation << endl;
+        cout << "Wind Speed: " << profile.windSpeed << endl;
+    }
+
+    cout << endl;
+
+    vector<string> availableCities = getAvailableCities(monthlyAverages);
+
+    cout << "Available Cities:" << endl;
+
+    for (size_t i = 0; i < availableCities.size(); i++) {
+        cout << i + 1 << ". " << availableCities[i] << endl;
+    }
+
+
+    cout << endl;
+
+    const WeatherProfile* selectedWeather =
+    findWeatherProfile(monthlyAverages, "Gainesville", "FL", "1");
+
+    if (selectedWeather != nullptr) {
+        cout << "Temperature: " << selectedWeather->temperature << endl;
+        cout << "Precipitation: " << selectedWeather->precipitation << endl;
+        cout << "Wind Speed: " << selectedWeather->windSpeed << endl;
+    }
+    else {
+        cout << "Weather profile not found!" << endl;
+    }
+
     return 0;
+
+
+
+
 }
