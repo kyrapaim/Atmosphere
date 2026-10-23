@@ -11,5 +11,11 @@ std::vector<Song> loadSongs(const std::string& fileName);
 
 std::vector<WeatherProfile> loadWeather(const std::string& fileName);
 
+std::vector<WeatherProfile> calculateMonthlyAverages(const std::vector<WeatherProfile>& weatherProfiles);
+
+std::vector<std::string> getAvailableCities(const std::vector<WeatherProfile>& monthlyAverages);
+
+
+
 
 #endif //ATMOSPHERE_DATALOADER_H

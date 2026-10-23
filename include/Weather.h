@@ -15,11 +15,7 @@ struct WeatherProfile {
     double windSpeed = 0.0;
 };
 
-
-std::vector<WeatherProfile> calculateMonthlyAverages(const std::vector<WeatherProfile>& weatherProfiles);
-
-std::vector<std::string> getAvailableCities(const std::vector<WeatherProfile>& monthlyAverages);
-
 const WeatherProfile* findWeatherProfile(const std::vector<WeatherProfile>& monthlyAverages, const std::string& city, const std::string& state, const std::string& month);
+
 
 #endif //ATMOSPHERE_WEATHER_H

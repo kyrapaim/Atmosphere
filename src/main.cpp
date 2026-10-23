@@ -1,9 +1,13 @@
 #include <iostream>
+#include "Scoring.h"
 #include "DataLoader.h"
 
 using namespace std;
 
 int main() {
+
+    //all testing purposes, do not mind
+
     try {
         vector<Song> songs =
             loadSongs("data/music_100k.csv");
@@ -81,8 +85,7 @@ int main() {
 
     cout << endl;
 
-    const WeatherProfile* selectedWeather =
-    findWeatherProfile(monthlyAverages, "Gainesville", "FL", "1");
+    const WeatherProfile* selectedWeather = findWeatherProfile(monthlyAverages, "Gainesville", "Florida", "9");
 
     if (selectedWeather != nullptr) {
         cout << "Temperature: " << selectedWeather->temperature << endl;
@@ -91,6 +94,18 @@ int main() {
     }
     else {
         cout << "Weather profile not found!" << endl;
+    }
+
+    cout << endl;
+
+    vector<Song> songs = loadSongs("data/music_100k.csv");
+
+    if (selectedWeather != nullptr) {
+        for (int i = 0; i < 5 && i < songs.size(); i++) {
+            double score = calculateScore(songs[i], *selectedWeather);
+
+            cout << songs[i].title << " " << songs[i].artist << " - Score: " << score << endl;
+        }
     }
 
     return 0;

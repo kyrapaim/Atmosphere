@@ -10,6 +10,7 @@ struct Song {
     std::string artist;
 
     double key = -1.0;
+    int mode = 0;
     double tempo = 0.0;
     double loudness = 0.0;
     double compatibility = 0.0;

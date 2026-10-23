@@ -73,6 +73,7 @@ vector<Song> loadSongs(const string& filename) {
 
         //strings to double values for music stats
         song.key = stod(songData[columnIndex.at("key")]);
+        song.mode = stoi(songData[columnIndex.at("mode")]);
         song.tempo = stod(songData[columnIndex.at("tempo")]);
         song.loudness = stod(songData[columnIndex.at("loudness")]);
 

@@ -44,6 +44,7 @@ def main():
                 "title",
                 "artist",
                 "key",
+                "mode",
                 "tempo",
                 "loudness"
             ])
@@ -59,6 +60,7 @@ def main():
                 key = float(a["key"])
                 tempo = float(a["tempo"])
                 loudness = float(a["loudness"])
+                mode = int(a["mode"])
 
                 # Skip missing or invalid records
                 if not song_id or song_id in seen_ids:
@@ -71,6 +73,9 @@ def main():
                            [key, tempo, loudness]):
                     continue
 
+                if mode not in (0, 1):
+                    continue
+
                 if tempo <= 0:
                     continue
 
@@ -81,6 +86,7 @@ def main():
                     title,
                     artist,
                     key,
+                    mode,
                     tempo,
                     loudness
                 ])
