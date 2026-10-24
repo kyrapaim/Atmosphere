@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Scoring.h"
 #include "DataLoader.h"
+#include "ScoredSong.h"
+
+
 
 using namespace std;
 
@@ -8,6 +11,7 @@ int main() {
 
     //all testing purposes, do not mind
 
+    //testing songs being loaded correctly
     try {
         vector<Song> songs =
             loadSongs("data/music_100k.csv");
@@ -33,13 +37,15 @@ int main() {
     }
 
     cout << endl;
-    // Load weather data
+
+
+    // testing the loading of weather data
     vector<WeatherProfile> weathers = loadWeather("data/weather.csv");
 
-    // Check how many weather profiles were loaded
+    // checking how many weather profiles were loaded
     cout << "Total weather profiles: " << weathers.size() << endl;
 
-    // Print the first 5 weather profiles
+    // printing the first 5 weather profiles
     for (size_t i = 0; i < 5 && i < weathers.size(); i++) {
         cout << "\nWeather Profile " << i + 1 << endl;
 
@@ -53,6 +59,8 @@ int main() {
     }
 
     cout << endl;
+
+    //testing monthly averages
 
     vector<WeatherProfile> weather = loadWeather("data/weather.csv");
 
@@ -74,6 +82,7 @@ int main() {
 
     cout << endl;
 
+    //testing the avaliable cities are unique
     vector<string> availableCities = getAvailableCities(monthlyAverages);
 
     cout << "Available Cities:" << endl;
@@ -85,6 +94,7 @@ int main() {
 
     cout << endl;
 
+    //testing finding specfic weather profiles
     const WeatherProfile* selectedWeather = findWeatherProfile(monthlyAverages, "Gainesville", "Florida", "9");
 
     if (selectedWeather != nullptr) {
@@ -98,18 +108,55 @@ int main() {
 
     cout << endl;
 
+    //testing the score compatibility of the first 5 songs in the music csv file
     vector<Song> songs = loadSongs("data/music_100k.csv");
 
+
+    cout << endl;
+
     if (selectedWeather != nullptr) {
-        for (int i = 0; i < 5 && i < songs.size(); i++) {
+
+        for (size_t i = 0; i < 5 && i < songs.size(); i++) {
+
             double score = calculateScore(songs[i], *selectedWeather);
 
-            cout << songs[i].title << " " << songs[i].artist << " - Score: " << score << endl;
+            cout << songs[i].title
+                 << " by " << songs[i].artist
+                 << " | Score: " << score << "/100"
+                 << endl;
         }
     }
 
-    return 0;
 
+    cout << endl;
+
+    //testing ScoredSong objects against the same weather profile of gainesville in jan
+
+    vector<ScoredSong> scoredSongs;
+
+    for (const Song& song : songs) {
+        double score = calculateScore(song, *selectedWeather);
+
+        ScoredSong scoredSong;
+        scoredSong.song = song;
+        scoredSong.score = score;
+
+        scoredSongs.push_back(scoredSong);
+    }
+
+    cout << "Total scored songs: " << scoredSongs.size() << endl;
+
+    for (int i = 50; i < 1000 && i < scoredSongs.size(); i++) {
+        if (scoredSongs[i].score < 90) {
+            continue;
+        }
+        cout << scoredSongs[i].song.title
+             << " by " << scoredSongs[i].song.artist
+             << " | Score: " << scoredSongs[i].score
+             << endl;
+    }
+
+    return 0;
 
 
 

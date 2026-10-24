@@ -14,6 +14,7 @@ add_executable(Atmosphere src/main.cpp
         src/MaxHeap.cpp
         src/MergeSort.cpp
         src/Scoring.cpp
+        include/ScoredSong.h
 )
 
 target_include_directories(Atmosphere PRIVATE
