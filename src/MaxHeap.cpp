@@ -20,18 +20,31 @@ MaxHeap::~MaxHeap(){
 }
 
 void MaxHeap::insert(ScoredSong song){
+    songs.push_back(song);
+    currentsize += 1;
+
+    heapifyUp(currentsize - 1);
 
 }
 
-void MaxHeap::extractMax(){
+ScoredSong MaxHeap::extractMax(){
+    ScoredSong max = songs[0]; // replace first element with last
+    songs[0] = songs[currentsize - 1];
+    songs.pop_back();
+    currentsize -= 1;
+
+    heapifyDown(0); // call heapifyDown on beginning of heap
+
+    return max;
 
 }
 
-int getSize(){
+int MaxHeap::getSize(){
+    return currentsize;
 
 }
 
-vector<ScoredSong> extractMaxN(int MaxN){
+vector<ScoredSong> MaxHeap::extractMaxN(int MaxN){
 
 }
 
@@ -56,7 +69,7 @@ void MaxHeap::heapifyDown(int index){
         int right = index * 2 + 2;
         int largerI = index;
 
-        if(left < currentsize && songs[index].score < songs[left].score)
+        if(left < currentsize && songs[largerI].score < songs[left].score)
             largerI = left;
         if(right < currentsize && songs[largerI].score < songs[right].score)
             largerI = right;
@@ -68,7 +81,6 @@ void MaxHeap::heapifyDown(int index){
             continue;
         }
         break;
-
 
     }
 
