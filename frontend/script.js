@@ -50,15 +50,39 @@ countButtons.forEach(button => {
 });
 
 // UPDATE PREVIEW
+
 function updatePreview() {
     const title = document.querySelector(".mood-title");
+    const regionSeasonLabel = document.getElementById(
+        "preview-region-season"
+    );
 
-    if (title) {
-        const city = selectedCity.split(",")[0];
+    // Split at the final comma so city names are preserved.
+    const separator = selectedCity.lastIndexOf(",");
 
-        title.innerHTML = `${city} in<br>${selectedMonth}.`;
+    if (separator === -1) return;
+
+    const city = selectedCity.slice(0, separator).trim();
+    const state = selectedCity.slice(separator + 1).trim();
+
+    // Update city/month heading
+   if (title) {
+    title.replaceChildren(
+        document.createTextNode(`${city} in`),
+        document.createElement("br"),
+        document.createTextNode(`${selectedMonth}.`)
+    );
+}
+
+    // Update region/season label
+    if (regionSeasonLabel) {
+        const region = getRegion(state);
+        const season = getSeason(selectedMonth);
+
+        regionSeasonLabel.textContent = `${region} · ${season}`;
     }
 }
+
 
 // GENERATE PLAYLIST
 const generateButton = document.querySelector(".generate-playlist");
@@ -86,18 +110,6 @@ const cityInput = document.getElementById("city-input");
 const cityResults = document.getElementById("city-results");
 const cityName = document.querySelector(".city-name");
 
-// Temporary city list for testing the interface.
-// Later this will come from your C++ weather dataset.
-const cities = [
-    "Seattle, Washington",
-    "Miami, Florida",
-    "Gainesville, Florida",
-    "New York, New York",
-    "Chicago, Illinois",
-    "Los Angeles, California",
-    "Boston, Massachusetts",
-    "Denver, Colorado"
-];
 
 cityInput.addEventListener("input", () => {
     const search = cityInput.value.trim().toLowerCase();
@@ -147,3 +159,5 @@ document.querySelectorAll(".algorithm-option").forEach(button => {
         button.classList.add("active-choice");
     });
 });
+
+updatePreview();
