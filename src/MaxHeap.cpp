@@ -45,7 +45,13 @@ int MaxHeap::getSize(){
 }
 
 vector<ScoredSong> MaxHeap::extractMaxN(int MaxN){
+    vector<ScoredSong> result {};
 
+    for(int i = 0; i < MaxN; i++){
+        result.push_back(extractMax());
+    }
+
+    return result;
 }
 
 void MaxHeap::heapifyUp(int index){
@@ -85,3 +91,4 @@ void MaxHeap::heapifyDown(int index){
     }
 
 }
+

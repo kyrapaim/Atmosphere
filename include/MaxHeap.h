@@ -18,7 +18,7 @@ class MaxHeap{
         ~ MaxHeap();
 
         void insert(ScoredSong song);
-        void extractMax();
+        ScoredSong extractMax();
 
         int getSize();
 
