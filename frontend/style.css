@@ -1018,3 +1018,42 @@
     color: #202039;
     border-color: #c5c1ff;
 }
+
+
+/* Custom song count section */
+.atmosphere-home .custom-song-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.atmosphere-home .custom-song-section label {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: #7f869c;
+}
+
+.atmosphere-home #custom-song-count {
+    width: 100%;
+    height: 43px;
+    padding: 0 14px;
+    background-color: #121722;
+    border: 1px solid #343a4b;
+    border-radius: 10px;
+    color: #f5f2ef;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.atmosphere-home #custom-song-count:focus {
+    border-color: #c5c1ff;
+}
+
+.atmosphere-home #custom-song-count::placeholder {
+    color: #7f869c;
+}

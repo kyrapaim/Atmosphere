@@ -1,122 +1,383 @@
-
-    <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="globals.css">
-<link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="globals.css"/>
+    <link rel="stylesheet" href="style.css"/>
+    <title>Atmosphere</title>
 </head>
 
 <body>
-<div class="atmosphere-home" data-model-id="16:280"><div class="navigation" ><div class="brand" ><img class="atmosphere-symbol" src="assets/images/atmosphere-symbol.svg" />
-<div class="wordmark" >ATMOSPHERE</div></div></div>
-<div class="introduction" ><div class="editorial-heading" ><p class="eyebrow" >TURN A CITY’S SEASONAL WEATHER INTO A PLAYLIST</p>
-<p class="headline" >Every season has a “sound.”</p></div></div>
-<div class="playlist-studio" ><div class="playlist-builder" ><div class="div" ><div class="title" >Build your atmosphere</div>
-<p class="description" >Choose your place, your month, and how long you want to stay.</p></div>
-<div class="div-2" ><div class="step-heading" ><div class="step-number" ><div class="number" >01</div></div>
-<div class="control-label" >City</div>
-<div class="control-hint" >United States only</div></div>
+<div class="atmosphere-home" data-model-id="16:280">
 
-<div class="city-search">
-    <img class="search"
-         src="assets/images/search.svg"
-         alt="">
-
-    <input
-        type="text"
-        id="city-input"
-        placeholder="Search for a U.S. city"
-        autocomplete="off"
-        aria-label="Search for a U.S. city"
-    >
-</div>
-
-<div id="city-results" class="city-results" hidden></div>
-<div class="selected-city" ><img class="img" src="assets/images/map-pin.svg" />
-<div class="city-details" ><div class="city-name" >Seattle, Washington</div>
-<div class="country" >United States</div></div>
-<div class="selected-indicator" ></div></div></div>
-<div class="div-2" ><div class="step-heading" ><div class="step-number" ><div class="number" >02</div></div>
-<div class="control-label" >Month</div>
-<p class="control-hint" >Choose any time of year</p></div>
-<div class="div" ><div class="month-row" ><div class="month-option" ><div class="month-name" >January</div></div>
-<div class="month-option" ><div class="month-name" >February</div></div>
-<div class="month-option" ><div class="month-name" >March</div></div>
-<div class="month-option" ><div class="month-name" >April</div></div></div>
-<div class="month-row" ><div class="month-option" ><div class="month-name" >May</div></div>
-<div class="month-option" ><div class="month-name" >June</div></div>
-<div class="month-option" ><div class="month-name" >July</div></div>
-<div class="month-option" ><div class="month-name" >August</div></div></div>
-<div class="month-row" ><div class="month-option" ><div class="month-name" >September</div></div>
-<div class="month-name-wrapper" ><div class="text-wrapper" >October</div></div>
-<div class="month-option" ><div class="month-name" >November</div></div>
-<div class="month-option" ><div class="month-name" >December</div></div></div></div>
-<p class="seasonal-explanation" >Based on typical weather for this city and month—not a live forecast.</p></div>
-<div class="div-2" ><div class="step-heading" ><div class="step-number" ><div class="number" >03</div></div>
-<div class="control-label" >Number of songs</div>
-<p class="control-hint" >25 songs · About 1 hr 30 min</p></div>
-<div class="div-3" ><div class="song-count-option" ><div class="song-count" >10</div></div>
-<div class="song-count-wrapper" ><div class="song-count-2" >25</div></div>
-<div class="song-count-option" ><div class="song-count" >50</div></div>
-<div class="song-count-option" ><div class="song-count" >100</div></div></div></div>
-<div class="div-2">
-    <div class="step-heading">
-        <div class="step-number"><div class="number">04</div></div>
-        <div class="control-label">Ranking algorithm</div>
-        <p class="control-hint">Choose how to rank songs</p>
-    </div>
-    <div class="algorithm-options">
-        <button type="button" class="algorithm-option active-choice" data-algorithm="merge">Merge Sort</button>
-        <button type="button" class="algorithm-option" data-algorithm="heap">Max Heap</button>
-    </div>
-</div>
-<div class="generate-action" ><div class="generate-playlist" ><img class="img" src="assets/images/sparkles.svg" />
-<div class="action-label" >Generate playlist</div>
-<img class="arrow-right" src="assets/images/arrow-right.svg" /></div></div></div>
-<div class="atmosphere-preview" ><div class="seasonal-landscape" ><img class="rainy-landscape" src="assets/images/rainy-landscape.png" />
-<div class="cinematic-scrim" ></div>
-<div class="preview-metadata" ><div class="preview-label" ><img class="cloud-rain" src="assets/images/cloud-rain.svg" />
-<div class="eyebrow-2" >YOUR ATMOSPHERE</div></div>
-
-<p class="location-coordinates">
-    47.61° N / 122.33° W
-</p>
-</div>
-
-<div class="seasonal-story">
-    <div class="season-label" id="preview-region-season">
-        PACIFIC NORTHWEST · AUTUMN
+    <!-- NAVIGATION -->
+    <div class="navigation">
+        <div class="brand">
+            <img class="atmosphere-symbol"
+                 src="assets/images/atmosphere-symbol.svg"/>
+            <div class="wordmark">ATMOSPHERE</div>
+        </div>
     </div>
 
-    <div class="mood-title">
-        Seattle in<br/>October.
+    <!-- INTRODUCTION -->
+    <div class="introduction">
+        <div class="editorial-heading">
+            <p class="eyebrow">
+                TURN A CITY'S SEASONAL WEATHER INTO A PLAYLIST
+            </p>
+            <p class="headline">
+                Every season has a “sound.”
+            </p>
+        </div>
     </div>
-</div>
+
+    <!-- TWO-COLUMN STUDIO -->
+    <div class="playlist-studio">
+
+        <!-- LEFT: PLAYLIST BUILDER -->
+        <div class="playlist-builder">
+
+            <div class="div">
+                <div class="title">Build your atmosphere</div>
+                <p class="description">
+                    Choose your place, your month, and how long you want to stay.
+                </p>
+            </div>
+
+            <!-- STEP 01: CITY -->
+            <div class="div-2">
+
+                <div class="step-heading">
+                    <div class="step-number">
+                        <div class="number">01</div>
+                    </div>
+                    <div class="control-label">City</div>
+                    <div class="control-hint">United States only</div>
+                </div>
+
+                <div class="city-search">
+                    <img class="search"
+                         src="assets/images/search.svg"
+                         alt=""/>
+
+                    <input
+                        type="text"
+                        id="city-input"
+                        placeholder="Search for a U.S. city"
+                        autocomplete="off"
+                        aria-label="Search for a U.S. city"
+                    />
+                </div>
+
+                <div id="city-results"
+                     class="city-results"
+                     hidden></div>
+
+                <div class="selected-city">
+                    <img class="img"
+                         src="assets/images/map-pin.svg"
+                         alt=""/>
+
+                    <div class="city-details">
+                        <div class="city-name">
+                            Seattle, Washington
+                        </div>
+                        <div class="country">
+                            United States
+                        </div>
+                    </div>
+
+                    <div class="selected-indicator"></div>
+                </div>
+
+            </div>
+            <!-- END CITY -->
+
+            <!-- STEP 02: MONTH -->
+            <div class="div-2">
+
+                <div class="step-heading">
+                    <div class="step-number">
+                        <div class="number">02</div>
+                    </div>
+
+                    <div class="control-label">Month</div>
+
+                    <p class="control-hint">
+                        Choose any time of year: based on averaged weather, not a live forecast
+                    </p>
+                </div>
+
+                <div class="div">
+
+                    <div class="month-row">
+                        <div class="month-option">
+                            <div class="month-name">January</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">February</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">March</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">April</div>
+                        </div>
+                    </div>
+
+                    <div class="month-row">
+                        <div class="month-option">
+                            <div class="month-name">May</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">June</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">July</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">August</div>
+                        </div>
+                    </div>
+
+                    <div class="month-row">
+                        <div class="month-option">
+                            <div class="month-name">September</div>
+                        </div>
+                        <div class="month-name-wrapper">
+                            <div class="text-wrapper">October</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">November</div>
+                        </div>
+                        <div class="month-option">
+                            <div class="month-name">December</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- END MONTH -->
+
+            <!-- STEP 03: NUMBER OF SONGS -->
+            <div class="div-2">
+
+                <div class="step-heading">
+                    <div class="step-number">
+                        <div class="number">03</div>
+                    </div>
+
+                    <div class="control-label">
+                        Number of songs
+                    </div>
+
+                    <p class="control-hint" id="song-count-hint">
+                        25 songs
+                    </p>
+                </div>
+
+                <div class="div-3">
+                    <div class="song-count-option">
+                        <div class="song-count">10</div>
+                    </div>
+
+                    <div class="song-count-wrapper">
+                        <div class="song-count-2">25</div>
+                    </div>
+
+                    <div class="song-count-option">
+                        <div class="song-count">50</div>
+                    </div>
+
+                    <div class="song-count-option">
+                        <div class="song-count">100</div>
+                    </div>
+                </div>
+
+                <!-- CUSTOM SONG COUNT -->
+                <div class="custom-song-section">
+                    <label for="custom-song-count">
+                        Or enter a custom amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="custom-song-count"
+                        min="1"
+                        max="10000"
+                        step="1"
+                        placeholder="1 - 10,000"
+                    />
+                </div>
+
+            </div>
+            <!-- END NUMBER OF SONGS -->
+
+            <!-- STEP 04: RANKING ALGORITHM -->
+            <div class="div-2">
+
+                <div class="step-heading">
+                    <div class="step-number">
+                        <div class="number">04</div>
+                    </div>
+
+                    <div class="control-label">
+                        Ranking algorithm
+                    </div>
+
+                    <p class="control-hint">
+                        Choose how to rank songs
+                    </p>
+                </div>
+
+                <div class="algorithm-options">
+                    <button
+                        type="button"
+                        class="algorithm-option active-choice"
+                        data-algorithm="merge">
+                        Merge Sort
+                    </button>
+
+                    <button
+                        type="button"
+                        class="algorithm-option"
+                        data-algorithm="heap">
+                        Max Heap
+                    </button>
+                </div>
+
+            </div>
+            <!-- END ALGORITHM -->
+
+            <!-- GENERATE PLAYLIST -->
+            <div class="generate-action">
+                <div class="generate-playlist">
+                    <img class="img"
+                         src="assets/images/sparkles.svg"
+                         alt=""/>
+
+                    <div class="action-label">
+                        Generate playlist
+                    </div>
+
+                    <img class="arrow-right"
+                         src="assets/images/arrow-right.svg"
+                         alt=""/>
+                </div>
+            </div>
+
+        </div>
+        <!-- END PLAYLIST BUILDER -->
+
+        <!-- RIGHT: ATMOSPHERE PREVIEW -->
+        <div class="atmosphere-preview">
+
+            <div class="seasonal-landscape">
+
+                <img class="rainy-landscape"
+                     src="assets/images/rainy-landscape.png"
+                     alt="Rainy landscape"/>
+
+                <div class="cinematic-scrim"></div>
+
+                <div class="preview-metadata">
+                    <div class="preview-label">
+                        <img class="cloud-rain"
+                             src="assets/images/cloud-rain.svg"
+                             alt=""/>
+
+                        <div class="eyebrow-2">
+                            YOUR ATMOSPHERE
+                        </div>
+                    </div>
+
+                    <p class="location-coordinates">
+                        47.61° N / 122.33° W
+                    </p>
+                </div>
+
+                <div class="seasonal-story">
+                    <div class="season-label"
+                         id="preview-region-season">
+                        PACIFIC NORTHWEST · AUTUMN
+                    </div>
+
+                    <div class="mood-title">
+                        Seattle in<br/>October.
+                    </div>
+                </div>
+
+            </div>
+            <!-- END LANDSCAPE -->
+
+            <div class="sound-palette">
+
+                <div class="sound-palette-2">
+                    <p class="section-label">
+                        THE SOUND OF YOUR SEASON
+                    </p>
+
+                    <div class="soundwave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar-2"></div>
+                        <div class="wave-bar-3"></div>
+                        <div class="wave-bar-4"></div>
+                        <div class="wave-bar-5"></div>
+                        <div class="wave-bar-6"></div>
+                        <div class="wave-bar-7"></div>
+                        <div class="wave-bar-8"></div>
+                        <div class="wave-bar-9"></div>
+                        <div class="wave-bar-10"></div>
+                        <div class="wave-bar-11"></div>
+                    </div>
+                </div>
+
+                <p class="sound-headline">
+                    A matched tempo for your monthly weather
+                </p>
+
+                <p class="sound-description">
+                    What atmosphere speaks to you?
+                </p>
+
+                <div class="div-3">
+                    <div class="mood-tag">
+                        <div class="tag-label">
+                            Softer tempo: Rainy &amp; reflective
+                        </div>
+                    </div>
+
+                    <div class="mood-tag">
+                        <div class="tag-label">
+                            Higher tempo: Warm &amp; happy
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+            <!-- END SOUND PALETTE -->
+
+        </div>
+        <!-- END ATMOSPHERE PREVIEW -->
+
+    </div>
+    <!-- END PLAYLIST STUDIO -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="brand-philosophy">
+            Build your Atmosphere
+        </p>
+    </footer>
 
 </div>
+<!-- END ATMOSPHERE HOME -->
 
-<div class="sound-palette" ><div class="sound-palette-2" ><p class="section-label" >THE SOUND OF YOUR SEASON</p>
-<div class="soundwave" ><div class="wave-bar" ></div>
-<div class="wave-bar-2" ></div>
-<div class="wave-bar-3" ></div>
-<div class="wave-bar-4" ></div>
-<div class="wave-bar-5" ></div>
-<div class="wave-bar-6" ></div>
-<div class="wave-bar-7" ></div>
-<div class="wave-bar-8" ></div>
-<div class="wave-bar-9" ></div>
-<div class="wave-bar-10" ></div>
-<div class="wave-bar-11" ></div></div></div>
-<p class="sound-headline" >A softer tempo for rainy days.</p>
-<p class="sound-description" >Think warm indie, hushed acoustic textures, and slow-burning ambient sounds. Reflective, never gloomy.</p>
-<div class="div-3" ><div class="mood-tag" ><div class="tag-label" >Rainy &amp; reflective</div></div>
-<div class="mood-tag" ><div class="tag-label" >Warm acoustics</div></div>
-<div class="mood-tag" ><div class="tag-label" >Unhurried</div></div></div></div></div></div>
-<footer class="footer" ><p class="brand-philosophy" >Not the weather outside, but the feeling of being there.</p></footer></div>
 <script src="cities.js"></script>
 <script src="regions.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

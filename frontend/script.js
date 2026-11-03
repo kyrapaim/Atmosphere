@@ -11,6 +11,16 @@ let selectedMonth = "October";
 let selectedCount = 25;
 let selectedCity = "Seattle, Washington";
 
+const songCountHint = document.getElementById("song-count-hint");
+const customSongInput = document.getElementById("custom-song-count");
+
+function updateSongCountHint() {
+    if (songCountHint) {
+        songCountHint.textContent =
+            `${selectedCount.toLocaleString("en-US")} ${selectedCount === 1 ? "song" : "songs"}`;
+    }
+}
+
 // Set the initial selections
 document.querySelector(".month-name-wrapper")
     ?.classList.add("active-choice");
@@ -34,20 +44,58 @@ monthButtons.forEach(button => {
     });
 });
 
+
 // SONG COUNT SELECTION
 countButtons.forEach(button => {
     button.addEventListener("click", () => {
         selectedCount = Number(button.textContent.trim());
 
+        // Remove highlight from other preset buttons
         countButtons.forEach(item => {
             item.classList.remove("active-choice");
         });
 
+        // Highlight selected preset
         button.classList.add("active-choice");
+
+        // Clear custom input
+        customSongInput.value = "";
+
+        // Update text above buttons
+        updateSongCountHint();
 
         console.log("Selected count:", selectedCount);
     });
 });
+
+// CUSTOM SONG COUNT
+customSongInput.addEventListener("input", () => {
+    const rawValue = customSongInput.value.trim();
+    const count = Number(rawValue);
+
+    // Clear preset selection when entering custom amount
+    countButtons.forEach(button => {
+        button.classList.remove("active-choice");
+    });
+
+    // Don't accept empty, decimal, or out-of-range values
+    if (
+        rawValue === "" ||
+        !Number.isInteger(count) ||
+        count < 1 ||
+        count > 10000
+    ) {
+        selectedCount = null;
+        songCountHint.textContent = "Enter 1–100,000 songs";
+        return;
+    }
+
+    selectedCount = count;
+    updateSongCountHint();
+
+    console.log("Custom count:", selectedCount);
+});
+
 
 // UPDATE PREVIEW
 
@@ -89,6 +137,16 @@ const generateButton = document.querySelector(".generate-playlist");
 
 if (generateButton) {
     generateButton.addEventListener("click", () => {
+    if (
+        !Number.isInteger(selectedCount) ||
+        selectedCount < 1 ||
+        selectedCount > 10000
+    ) {
+        alert("Please select a valid number of songs between 1 and 100,000.");
+        customSongInput.focus();
+        return;
+    }
+
     const selections = {
         city: selectedCity,
         month: selectedMonth,
