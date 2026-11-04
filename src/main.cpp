@@ -2,7 +2,7 @@
 #include "Scoring.h"
 #include "DataLoader.h"
 #include "ScoredSong.h"
-#include "MaxHeap.h"
+#include "MergeSort.h"
 
 
 
@@ -105,6 +105,7 @@ int main() {
     }
     else {
         cout << "Weather profile not found!" << endl;
+        return 1;
     }
 
     cout << endl;
@@ -169,15 +170,17 @@ int main() {
 
 //     cout << "Total scored songs: " << scoredSongs.size() << endl;
 
-//     for (int i = 50; i < 1000 && i < scoredSongs.size(); i++) {
-//         if (scoredSongs[i].score < 90) {
-//             continue;
-//         }
-//         cout << scoredSongs[i].song.title
-//              << " by " << scoredSongs[i].song.artist
-//              << " | Score: " << scoredSongs[i].score
-//              << endl;
-//     }
+    // testing merge sort top 10 songs
+    vector<ScoredSong> sortedSongs = scoredSongs;
+    mergeSort(sortedSongs);
+
+    cout << "\nMerge sort: top 10\n";
+
+    for (size_t i = 0; i < 10 && i < sortedSongs.size(); ++i) {
+        cout << sortedSongs[i].song.title
+             << " | Score: " << sortedSongs[i].score << '\n';
+    }
+    return 0;
 
      return 0;
 
