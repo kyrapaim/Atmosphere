@@ -26,7 +26,7 @@ document.getElementById("playlist-description").textContent =
 document.getElementById("algorithm-label").textContent =
     selections.algorithm === "merge"
         ? "Merge Sort selected"
-        : "Max Heap selected";
+        : "Heap Sort selected";
 
 document.getElementById("song-total").textContent =
     `${selections.count} songs requested`;
