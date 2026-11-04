@@ -11,9 +11,6 @@ MaxHeap::MaxHeap(){
 
 }
 
-MaxHeap::MaxHeap(ScoredSong song){
-    
-}
 
 MaxHeap::~MaxHeap(){
 

@@ -2,6 +2,7 @@
 #include "Scoring.h"
 #include "DataLoader.h"
 #include "ScoredSong.h"
+#include "MaxHeap.h"
 
 
 
@@ -46,19 +47,19 @@ int main() {
     cout << "Total weather profiles: " << weathers.size() << endl;
 
     // printing the first 5 weather profiles
-    for (size_t i = 0; i < 5 && i < weathers.size(); i++) {
-        cout << "\nWeather Profile " << i + 1 << endl;
+    // for (size_t i = 0; i < 5 && i < weathers.size(); i++) {
+    //     cout << "\nWeather Profile " << i + 1 << endl;
 
-        cout << "City: " << weathers[i].city << endl;
-        cout << "State: " << weathers[i].state << endl;
-        cout << "Month: " << weathers[i].month << endl;
-        cout << "Temperature: " << weathers[i].temperature << endl;
-        cout << "Precipitation: " << weathers[i].precipitation << endl;
-        cout << "Wind Speed: " << weathers[i].windSpeed << endl;
+    //     cout << "City: " << weathers[i].city << endl;
+    //     cout << "State: " << weathers[i].state << endl;
+    //     cout << "Month: " << weathers[i].month << endl;
+    //     cout << "Temperature: " << weathers[i].temperature << endl;
+    //     cout << "Precipitation: " << weathers[i].precipitation << endl;
+    //     cout << "Wind Speed: " << weathers[i].windSpeed << endl;
 
-    }
+    // }
 
-    cout << endl;
+    // cout << endl;
 
     //testing monthly averages
 
@@ -132,32 +133,54 @@ int main() {
 
     //testing ScoredSong objects against the same weather profile of gainesville in jan
 
-    vector<ScoredSong> scoredSongs;
+    // vector<ScoredSong> scoredSongs;
 
-    for (const Song& song : songs) {
+    // for (const Song& song : songs) {
+    //     double score = calculateScore(song, *selectedWeather);
+
+    //     ScoredSong scoredSong;
+    //     scoredSong.song = song;
+    //     scoredSong.score = score;
+
+    //     scoredSongs.push_back(scoredSong);
+    // }
+
+    // testing MaxHeap
+    // creating max heap straight from the songs
+    MaxHeap orderedSongs;
+
+    for (const Song& song : songs){
         double score = calculateScore(song, *selectedWeather);
 
         ScoredSong scoredSong;
         scoredSong.song = song;
         scoredSong.score = score;
+        orderedSongs.insert(scoredSong);
 
-        scoredSongs.push_back(scoredSong);
     }
 
-    cout << "Total scored songs: " << scoredSongs.size() << endl;
-
-    for (int i = 50; i < 1000 && i < scoredSongs.size(); i++) {
-        if (scoredSongs[i].score < 90) {
-            continue;
-        }
-        cout << scoredSongs[i].song.title
-             << " by " << scoredSongs[i].song.artist
-             << " | Score: " << scoredSongs[i].score
-             << endl;
+    vector<ScoredSong> topN;
+     
+    topN = orderedSongs.extractMaxN(10);
+    for(const ScoredSong& song : topN){
+        cout << song.song.title << "\n";
     }
+    
 
-    return 0;
+//     cout << "Total scored songs: " << scoredSongs.size() << endl;
+
+//     for (int i = 50; i < 1000 && i < scoredSongs.size(); i++) {
+//         if (scoredSongs[i].score < 90) {
+//             continue;
+//         }
+//         cout << scoredSongs[i].song.title
+//              << " by " << scoredSongs[i].song.artist
+//              << " | Score: " << scoredSongs[i].score
+//              << endl;
+//     }
+
+     return 0;
 
 
-
-}
+ }
+    
