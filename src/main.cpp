@@ -3,6 +3,7 @@
 #include "DataLoader.h"
 #include "ScoredSong.h"
 #include "MergeSort.h"
+#include "MaxHeap.h"
 
 
 
@@ -146,44 +147,51 @@ int main() {
     //     scoredSongs.push_back(scoredSong);
     // }
 
-    // testing MaxHeap
-    // creating max heap straight from the songs
-    MaxHeap orderedSongs;
 
-    for (const Song& song : songs){
+    // Score all songs using the selected weather profile
+    vector<ScoredSong> scoredSongs;
+
+    for (const Song& song : songs) {
         double score = calculateScore(song, *selectedWeather);
 
         ScoredSong scoredSong;
         scoredSong.song = song;
         scoredSong.score = score;
-        orderedSongs.insert(scoredSong);
 
+        scoredSongs.push_back(scoredSong);
     }
 
-    vector<ScoredSong> topN;
-     
-    topN = orderedSongs.extractMaxN(10);
-    for(const ScoredSong& song : topN){
-        cout << song.song.title << "\n";
+    cout << "\nTotal scored songs: "
+         << scoredSongs.size() << endl;
+
+    // Testing Max Heap
+    MaxHeap orderedSongs;
+
+    for (const ScoredSong& song : scoredSongs) {
+        orderedSongs.insert(song);
     }
-    
 
-//     cout << "Total scored songs: " << scoredSongs.size() << endl;
+    vector<ScoredSong> topN = orderedSongs.extractMaxN(10);
 
-    // testing merge sort top 10 songs
-    vector<ScoredSong> sortedSongs = scoredSongs;
-    mergeSort(sortedSongs);
+    cout << "\nMax Heap: Top 10\n";
 
-    cout << "\nMerge sort: top 10\n";
-
-    for (size_t i = 0; i < 10 && i < sortedSongs.size(); ++i) {
-        cout << sortedSongs[i].song.title
-             << " | Score: " << sortedSongs[i].score << '\n';
+    for (const ScoredSong& song : topN) {
+        cout << song.song.title
+             << " | Score: " << song.score << '\n';
     }
+
+    // Testing Merge Sort
+    vector<ScoredSong> sortedSongs = topKMergeSort(scoredSongs, 10);
+
+    cout << "\nMerge Sort: Top 10\n";
+
+    for (const ScoredSong& song : sortedSongs) {
+        cout << song.song.title
+             << " | Score: " << song.score << '\n';
+    }
+
     return 0;
+}
 
-     return 0;
 
-
- }
     
