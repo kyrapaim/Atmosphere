@@ -31,3 +31,12 @@ add_executable(AtmosphereServer
 )
 
 target_link_libraries(AtmosphereServer PRIVATE AtmosphereCore)
+
+if(WIN32)
+    target_link_libraries(AtmosphereServer PRIVATE ws2_32)
+endif()
+
+# Avoid oversized MinGW debug information for the HTTP server
+if(MINGW)
+    target_compile_options(AtmosphereServer PRIVATE -g0)
+endif()

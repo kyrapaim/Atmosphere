@@ -1,4 +1,3 @@
-
 const regionStates = {
   "PACIFIC NORTHWEST": [
     "Washington", "Oregon"

@@ -86,7 +86,7 @@ customSongInput.addEventListener("input", () => {
         count > 10000
     ) {
         selectedCount = null;
-        songCountHint.textContent = "Enter 1–100,000 songs";
+        songCountHint.textContent = "Enter 1–10,000 songs";
         return;
     }
 
@@ -219,3 +219,43 @@ document.querySelectorAll(".algorithm-option").forEach(button => {
 });
 
 updatePreview();
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const saved = sessionStorage.getItem("atmosphereSelections");
+
+    if (!saved) {
+        console.error("No playlist selections found.");
+        return;
+    }
+
+    const selections = JSON.parse(saved);
+
+    console.log("Frontend selections:", selections);
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8081/recommend",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(selections)
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Recommendation failed");
+        }
+
+        console.log("Backend recommendations:", data);
+        console.log("Algorithm runtime:", data.executionTimeMs, "ms");
+        console.log("Recommended songs:", data.songs);
+
+    } catch (error) {
+        console.error("Atmosphere backend error:", error);
+    }
+});
+

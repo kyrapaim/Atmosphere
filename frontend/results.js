@@ -1,64 +1,111 @@
 
-const saved = sessionStorage.getItem("atmosphereSelections");
+document.addEventListener("DOMContentLoaded", async () => {
+    const saved = sessionStorage.getItem("atmosphereSelections");
 
-const selections = saved ? JSON.parse(saved) : {
-    city: "Seattle, Washington",
-    month: "October",
-    count: 25,
-    algorithm: "merge"
-};
+    const locationLabel = document.getElementById("location-label");
+    const description = document.getElementById("playlist-description");
+    const algorithmLabel = document.getElementById("algorithm-label");
+    const songTotal = document.getElementById("song-total");
+    const container = document.getElementById("playlist-results");
 
-// Sample data ONLY — not scored by C++
-const mockSongs = [
-    { title: "Sample Song A", artist: "Artist A", score: 94.8 },
-    { title: "Sample Song B", artist: "Artist B", score: 93.7 },
-    { title: "Sample Song C", artist: "Artist C", score: 92.9 },
-    { title: "Sample Song D", artist: "Artist D", score: 91.6 },
-    { title: "Sample Song E", artist: "Artist E", score: 90.8 }
-];
+    // Make sure the user generated a playlist first.
+    if (!saved) {
+        description.textContent =
+            "No playlist found. Return to the builder to create one.";
+        return;
+    }
 
-document.getElementById("location-label").textContent =
-    `${selections.city} · ${selections.month}`;
+    let selections;
 
-document.getElementById("playlist-description").textContent =
-    `${selections.count} songs requested for your atmosphere`;
+    try {
+        selections = JSON.parse(saved);
+    } catch (error) {
+        description.textContent = "Invalid playlist selections.";
+        console.error(error);
+        return;
+    }
 
-document.getElementById("algorithm-label").textContent =
-    selections.algorithm === "merge"
-        ? "Merge Sort selected"
-        : "Heap Sort selected";
+    // Display the user's selections.
+    locationLabel.textContent =
+        `${selections.city} · ${selections.month}`;
 
-document.getElementById("song-total").textContent =
-    `${selections.count} songs requested`;
+    description.textContent =
+        `${selections.count} songs requested for your atmosphere`;
 
-const container = document.getElementById("playlist-results");
+    algorithmLabel.textContent =
+        selections.algorithm === "merge"
+            ? "Merge Sort selected"
+            : "Heap Sort selected";
 
-// Repeat the sample records to demonstrate the selected length.
-// This does not perform real ranking.
-for (let i = 0; i < selections.count; i++) {
-    const song = mockSongs[i % mockSongs.length];
+    songTotal.textContent = "Generating playlist...";
 
-    const row = document.createElement("div");
-    row.className = "song-row";
+    try {
+        // Send selections to your C++ backend.
+        const response = await fetch(
+            "http://127.0.0.1:8081/recommend",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(selections)
+            }
+        );
 
-    const number = document.createElement("span");
-    number.textContent = i + 1;
+        const data = await response.json();
 
-    const info = document.createElement("div");
-    info.className = "song-info";
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Recommendation request failed"
+            );
+        }
 
-    const title = document.createElement("strong");
-    title.textContent = song.title;
+        console.log("Backend recommendations:", data);
 
-    const artist = document.createElement("small");
-    artist.textContent = song.artist;
+        // Display actual number of songs and execution time.
+        description.textContent =
+            `${data.returnedCount} songs generated for your atmosphere`;
 
-    info.append(title, artist);
+        songTotal.textContent =
+            `${data.returnedCount} songs · ` +
+            `${data.executionTimeMs.toFixed(2)} ms`;
 
-    const score = document.createElement("span");
-    score.className = "match-score";
-    score.textContent = `${song.score.toFixed(1)}%`;
+        // Remove any previous results.
+        container.replaceChildren();
 
-    row.append(number, info, score);
-    container.appendChild(row);
-}
+        // Display real C++ recommendations.
+        data.songs.forEach((song, index) => {
+            const row = document.createElement("div");
+            row.className = "song-row";
+
+            const number = document.createElement("span");
+            number.textContent = index + 1;
+
+            const info = document.createElement("div");
+            info.className = "song-info";
+
+            const title = document.createElement("strong");
+            title.textContent = song.title;
+
+            const artist = document.createElement("small");
+            artist.textContent = song.artist;
+
+            info.append(title, artist);
+
+            const score = document.createElement("span");
+            score.className = "match-score";
+            score.textContent = `${song.score.toFixed(1)}%`;
+
+            row.append(number, info, score);
+            container.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Atmosphere backend error:", error);
+
+        songTotal.textContent = "Unable to generate playlist";
+
+        description.textContent =
+            `Error: ${error.message}`;
+    }
+});
