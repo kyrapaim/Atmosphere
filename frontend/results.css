@@ -1,0 +1,113 @@
+body {
+    background: #10131d;
+    color: #f5f2ef;
+    font-family: "Inter", sans-serif;
+}
+
+.results-page {
+    max-width: 1100px;
+    margin: auto;
+    padding: 32px;
+}
+
+.results-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #343a4b;
+    letter-spacing: 2px;
+}
+
+.results-nav a {
+    color: #c5c1ff;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+.results-content {
+    padding-top: 60px;
+}
+
+.eyebrow {
+    color: #c5c1ff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-family: "Instrument Serif", serif;
+    font-size: clamp(44px, 6vw, 76px);
+    font-weight: 400;
+    margin: 18px 0;
+}
+
+#playlist-description {
+    color: #b0b4c3;
+}
+
+.playlist-details {
+    display: flex;
+    gap: 24px;
+    margin: 32px 0;
+    color: #c5c1ff;
+}
+
+.playlist-table {
+    background: #191e2c;
+    border: 1px solid #343a4b;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.table-heading,
+.song-row {
+    display: grid;
+    grid-template-columns: 45px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #343a4b;
+}
+
+.table-heading {
+    color: #b0b4c3;
+    font-size: 12px;
+}
+
+.song-row:last-child {
+    border-bottom: none;
+}
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.song-info small {
+    color: #b0b4c3;
+}
+
+.match-score {
+    color: #c5c1ff;
+    font-weight: 600;
+    text-align: right;
+}
+
+.demo-note {
+    color: #7f869c;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .results-page { padding: 18px; }
+    .results-content { padding-top: 32px; }
+    .table-heading, .song-row {
+        grid-template-columns: 24px 1fr 65px;
+        gap: 8px;
+        padding: 12px 4px;
+    }
+}
