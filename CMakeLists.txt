@@ -15,6 +15,7 @@ add_executable(Atmosphere src/main.cpp
         src/MergeSort.cpp
         src/Scoring.cpp
         include/ScoredSong.h
+        include/Ranking.h
 )
 
 target_include_directories(Atmosphere PRIVATE
