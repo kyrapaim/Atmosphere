@@ -37,6 +37,6 @@ COPY data/weather.csv data/weather.csv
 EXPOSE 10000
 
 # Start the C++ server.
-CMD ["sh", "-c", "echo 'Atmosphere container started successfully'; sleep 120"]
+CMD ["./AtmosphereServer"]
 
 ENTRYPOINT ["top", "-b"]
