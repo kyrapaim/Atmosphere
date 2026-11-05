@@ -1,42 +1,37 @@
-FROM ubuntu:latest
-LABEL authors="kyrap"
-
-# Use a Linux environment with a C++ compiler.
+# Stage 1: Compile the C++ backend
 FROM gcc:14-bookworm AS builder
 
-# Install CMake and Ninja.
+# Install CMake and Ninja to build the project
 RUN apt-get update && \
     apt-get install -y cmake ninja-build && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy the C++ source code and build configuration.
+# Copy the source code and CMake configuration
 COPY CMakeLists.txt .
 COPY include/ include/
 COPY src/ src/
 
-# Compile the server using the Release configuration.
+# Compile AtmosphereServer in Release mode
 RUN cmake -S . -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release && \
     cmake --build build --target AtmosphereServer
 
-# Create a smaller image for running the application.
+# Stage 2: Create the image that runs on Render
 FROM debian:bookworm-slim
 
 WORKDIR /app
 
-# Copy the compiled server.
+# Copy the compiled C++ server
 COPY --from=builder /app/build/AtmosphereServer /app/AtmosphereServer
 
-# Copy the datasets needed for recommendations.
+# Copy the datasets used by the recommendation system
 COPY data/music_100k.csv data/music_100k.csv
 COPY data/weather.csv data/weather.csv
 
-# Render provides PORT at runtime.
+# Document the default port used by Render
 EXPOSE 10000
 
-# Start the C++ server.
-CMD ["/bin/sh", "-c", "echo '=== CONTAINER STARTED ==='; ls -lh /app/AtmosphereServer; echo '=== CHECKING LIBRARIES ==='; ldd /app/AtmosphereServer; echo '=== RUNNING SERVER ==='; exec /app/AtmosphereServer"]
-
-ENTRYPOINT ["top", "-b"]
+# Start the actual C++ server
+CMD ["./AtmosphereServer"]
