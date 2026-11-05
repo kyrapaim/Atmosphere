@@ -37,6 +37,6 @@ COPY data/weather.csv data/weather.csv
 EXPOSE 10000
 
 # Start the C++ server.
-CMD ["./AtmosphereServer"]
+CMD ["/bin/sh", "-c", "echo '=== CONTAINER STARTED ==='; ls -lh /app/AtmosphereServer; echo '=== CHECKING LIBRARIES ==='; ldd /app/AtmosphereServer; echo '=== RUNNING SERVER ==='; exec /app/AtmosphereServer"]
 
 ENTRYPOINT ["top", "-b"]
