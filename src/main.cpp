@@ -1,9 +1,12 @@
 #include <iostream>
+#include <chrono>
 #include "Scoring.h"
 #include "DataLoader.h"
 #include "ScoredSong.h"
 #include "MergeSort.h"
 #include "MaxHeap.h"
+
+using namespace std::chrono;
 using namespace std;
 
 int main() {
@@ -162,23 +165,40 @@ int main() {
          << scoredSongs.size() << endl;
 
     // Testing Max Heap
+
+    auto start = high_resolution_clock::now(); //Time Max Heap
     MaxHeap orderedSongs;
 
     for (const ScoredSong& song : scoredSongs) {
         orderedSongs.insert(song);
     }
 
+    auto end = high_resolution_clock::now();
+    cout << "\nRuntime Analyis";
+    cout << "\nHeap build time: " << duration_cast<milliseconds>(end - start).count() << "ms\n";
+
+    start = high_resolution_clock::now(); // time extractMaxN
+
     vector<ScoredSong> topN = orderedSongs.extractMaxN(10);
 
-    cout << "\nMax Heap: Top 10\n";
+    end = high_resolution_clock::now();
+    cout << "Extract Max N time: " << duration_cast<milliseconds>(end - start).count() << "ms\n";
 
-    for (const ScoredSong& song : topN) {
-        cout << song.song.title
-             << " | Score: " << song.score << '\n';
-    }
+
+    // cout << "\nMax Heap: Top 10\n";
+
+    // for (const ScoredSong& song : topN) {
+    //     cout << song.song.title
+    //          << " | Score: " << song.score << '\n';
+    // }
 
     // Testing Merge Sort
+    start = high_resolution_clock::now(); // time extractMaxN
+
     vector<ScoredSong> sortedSongs = topKMergeSort(scoredSongs, 10);
+    end = high_resolution_clock::now();
+    cout << "Merge Sort build time: " << duration_cast<milliseconds>(end - start).count() << "ms\n";
+
 
     cout << "\nMerge Sort: Top 10\n";
 
