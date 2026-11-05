@@ -1,4 +1,4 @@
-// weather info used for recs
+// Builds profiles on monthly weather in cities
 #ifndef ATMOSPHERE_WEATHER_H
 #define ATMOSPHERE_WEATHER_H
 #pragma once

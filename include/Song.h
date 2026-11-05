@@ -1,4 +1,4 @@
-// defines info each song stores
+// Defines objects for collecting the relevant data music.csv files stores
 #ifndef ATMOSPHERE_SONG_H
 #define ATMOSPHERE_SONG_H
 #pragma once

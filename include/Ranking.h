@@ -1,7 +1,3 @@
-//
-// Created by Yuxuan Tao on 11/3/26.
-//
-
 #ifndef ATMOSPHERE_RANKING_H
 #define ATMOSPHERE_RANKING_H
 

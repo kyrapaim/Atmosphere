@@ -1,5 +1,5 @@
-#include "httplib.h"
-#include "json.hpp"
+#include "httplib.h" // allows c++ to recieve requests from the website
+#include "json.hpp" // read and send data in JSON format
 #include "DataLoader.h"
 #include "Scoring.h"
 #include "ScoredSong.h"
@@ -7,15 +7,16 @@
 #include "MaxHeap.h"
 #include "Weather.h"
 #include <algorithm>
-#include <chrono>
+#include <chrono> // for displaying algorithm times
 #include <filesystem>
 #include <vector>
 #include <string>
 #include <iostream>
+#include <cstdlib>
 using namespace std;
-
 using json = nlohmann::json;
 
+//months in csv files are in the form of numbers, to access weather data we need to get the corresponding number to a month
 string monthToNumber(const string& month) {
     const vector<string> months = {
         "January", "February", "March", "April",
@@ -34,7 +35,7 @@ string monthToNumber(const string& month) {
 
 
 int main() {
-    namespace fs = std::filesystem;
+    namespace fs = std::filesystem; //for locating files and folders
 
     fs::path dataDirectory = fs::current_path() / "data";
 
@@ -42,6 +43,7 @@ int main() {
         dataDirectory = fs::current_path().parent_path() / "data";
     }
 
+    // paths for datasets
     std::string songsPath =
         (dataDirectory / "music_100k.csv").string();
 
@@ -56,15 +58,12 @@ int main() {
     std::vector<WeatherProfile> monthlyWeather =
         calculateMonthlyAverages(weatherReports);
 
-    std::cout << "Loaded " << songs.size()
-              << " songs" << std::endl;
-
-    std::cout << "Loaded " << monthlyWeather.size()
-              << " monthly weather profiles" << std::endl;
 
     httplib::Server server;
+    // creating server
+    // JS frontend sends requests to C++ server when user generates playlist
 
-
+    // tell the browser to allow requests from frontend to connect frontend and backend
     server.set_pre_routing_handler(
         [](const httplib::Request&,
            httplib::Response& response) {
@@ -78,6 +77,7 @@ int main() {
                 "GET, POST, OPTIONS"
             );
 
+            // allows frontend to send JSON request bodies
             response.set_header(
                 "Access-Control-Allow-Headers",
                 "Content-Type"
@@ -87,6 +87,7 @@ int main() {
         }
     );
 
+    // may send OPTIONS request before POST
     server.Options(
         R"(/.*)",
         [](const httplib::Request&,
@@ -95,7 +96,7 @@ int main() {
         }
     );
 
-
+    // checking that datasets loaded in correctly
     server.Get("/data-status",
     [&songs, &monthlyWeather](
         const httplib::Request&,
@@ -106,6 +107,7 @@ int main() {
             {"weatherProfilesLoaded", monthlyWeather.size()}
         };
 
+        // converting result to JSON text to send it back
         response.set_content(
             result.dump(),
             "application/json"
@@ -113,6 +115,7 @@ int main() {
     }
 );
 
+    // checking that backend is running and properly responding to requests
     server.Get("/health",
         [](const httplib::Request& request,
            httplib::Response& response) {
@@ -129,7 +132,8 @@ int main() {
         }
     );
 
-
+// main endpoint used by Atmosphere
+// user clicks "generate playlist" and the JS frontend sends a POST request to /recommend
 server.Post("/recommend",
     [&songs, &monthlyWeather](
         const httplib::Request& request,
@@ -155,6 +159,7 @@ server.Post("/recommend",
                 return;
             }
 
+            // storing selections into its own variable
             string selectedCity = input["city"].get<string>();
             string month = input["month"].get<string>();
             int count = input["count"].get<int>();
@@ -170,7 +175,7 @@ server.Post("/recommend",
                 return;
             }
 
-            // Frontend sends "Gainesville, Florida".
+            // frontend sends location as one string, seperating city and state
             size_t comma = selectedCity.rfind(',');
 
             if (comma == string::npos) {
@@ -185,7 +190,7 @@ server.Post("/recommend",
             string city = selectedCity.substr(0, comma);
             string state = selectedCity.substr(comma + 1);
 
-            // Remove leading/trailing spaces.
+            // remove leading/trailing spaces.
             auto trim = [](string& value) {
                 size_t first = value.find_first_not_of(" \t\r\n");
 
@@ -201,9 +206,10 @@ server.Post("/recommend",
             trim(city);
             trim(state);
 
-            // CSV stores months as numbers.
+            // CSV stores months as numbers
             string numericMonth = monthToNumber(month);
 
+            //finding requested weatherprofile
             const WeatherProfile* weather =
                 findWeatherProfile(
                     monthlyWeather,
@@ -226,7 +232,7 @@ server.Post("/recommend",
                 return;
             }
 
-            // Calculate compatibility for every song.
+            // calculating compatibility scores for every song.
             vector<ScoredSong> scoredSongs;
             scoredSongs.reserve(songs.size());
 
@@ -240,6 +246,7 @@ server.Post("/recommend",
                 static_cast<int>(scoredSongs.size())
             );
 
+            // holds final ranked songs
             vector<ScoredSong> recommendations;
 
             auto start = chrono::steady_clock::now();
@@ -260,14 +267,17 @@ server.Post("/recommend",
             }
 
             auto end = chrono::steady_clock::now();
+            // displays execution time to help comparison
 
             double elapsedMs =
                 chrono::duration<double, milli>(
                     end - start
                 ).count();
 
+            // sending back the recommended songs
             json results = json::array();
 
+            // converts each song to a JSON object
             for (const ScoredSong& entry : recommendations) {
                 results.push_back({
                     {"id", entry.song.id},
@@ -292,6 +302,7 @@ server.Post("/recommend",
                 {"songs", results}
             };
 
+            // sends needed info back to frontend for displaying on results.html
             response.set_content(
                 output.dump(),
                 "application/json"
@@ -307,23 +318,32 @@ server.Post("/recommend",
     }
 );
 
-    const int port = 8081;
+
+    // continue using port 8081 when running locally.
+    const char* portEnvironment = std::getenv("PORT");
+    const int port = portEnvironment
+        ? std::stoi(portEnvironment)
+        : 8081;
+
+    // listen on all network interfaces so the cloud hosting provider can forward requests to the server.
+    const std::string host = "0.0.0.0";
 
     std::cout << "Starting Atmosphere server on port "
               << port << "..." << std::endl;
 
-    if (!server.bind_to_port("127.0.0.1", port)) {
+    if (!server.bind_to_port(host, port)) {
         std::cerr << "Port " << port
                   << " is unavailable." << std::endl;
         return 1;
     }
 
-    std::cout << "Atmosphere server running at "
-              << "http://localhost:" << port << std::endl;
+    std::cout << "Atmosphere server running on port "
+              << port << std::endl;
 
     server.listen_after_bind();
 
     return 0;
 }
+
 
 

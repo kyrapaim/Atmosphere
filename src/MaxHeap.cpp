@@ -1,7 +1,6 @@
 #include "MaxHeap.h"
 #include "Ranking.h"
 #include <vector>
-
 using namespace std;
 
 

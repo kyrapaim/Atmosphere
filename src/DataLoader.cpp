@@ -194,7 +194,7 @@ vector<string> getAvailableCities(const vector<WeatherProfile>& monthlyAverages)
     vector<string> availableCities(uniqueCities.begin(), uniqueCities.end());
     return availableCities;
 }
-
+//searching for the relevant WeatherProfile object so backend can extract data easily
 const WeatherProfile* findWeatherProfile(const vector<WeatherProfile>& monthlyAverages, const string& city, const string& state, const string& month) {
     for (const WeatherProfile& profile : monthlyAverages) {
         if (profile.city == city && profile.state == state && profile.month == month) {

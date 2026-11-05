@@ -4,9 +4,6 @@
 #include "ScoredSong.h"
 #include "MergeSort.h"
 #include "MaxHeap.h"
-
-
-
 using namespace std;
 
 int main() {

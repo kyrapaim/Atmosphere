@@ -1,13 +1,7 @@
-//
-// Created by kyrap on 10/20/2026.
-//
-
 #ifndef ATMOSPHERE_MAXHEAP_H
 #define ATMOSPHERE_MAXHEAP_H
-
 #include <vector>
 #include "ScoredSong.h"
-
 using namespace std;
 
 
