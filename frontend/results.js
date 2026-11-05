@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
     const saved = sessionStorage.getItem("atmosphereSelections");
 
@@ -8,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const songTotal = document.getElementById("song-total");
     const container = document.getElementById("playlist-results");
 
-    // Make sure the user generated a playlist first.
+    // Make sure the user generated a playlist first
     if (!saved) {
         description.textContent =
             "No playlist found. Return to the builder to create one.";
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    // Display the user's selections.
+    // Display the user's selections
     locationLabel.textContent =
         `${selections.city} · ${selections.month}`;
 
@@ -40,10 +39,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     songTotal.textContent = "Generating playlist...";
 
     try {
-        // Send selections to your C++ backend.
-        const response = await fetch(
-            "http://127.0.0.1:8081/recommend",
-            {
+        // Send selections to your C++ backend
+        const response = await fetch ("https://atmosphere-nxj4.onrender.com/recommend", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         console.log("Backend recommendations:", data);
 
-        // Display actual number of songs and execution time.
+        // Display actual number of songs and execution time
         description.textContent =
             `${data.returnedCount} songs generated for your atmosphere`;
 
@@ -70,10 +67,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             `${data.returnedCount} songs · ` +
             `${data.executionTimeMs.toFixed(2)} ms`;
 
-        // Remove any previous results.
+        // Remove any previous results
         container.replaceChildren();
 
-        // Display real C++ recommendations.
+        // Display real C++ recommendations
         data.songs.forEach((song, index) => {
             const row = document.createElement("div");
             row.className = "song-row";
