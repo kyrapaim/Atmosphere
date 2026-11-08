@@ -85,54 +85,9 @@ The application uses a distributed architecture:
 
 **Note:** The Render free hosting plan may spin down after inactivity. The first request after an idle period can take approximately 50 seconds or longer while the server restarts. This is not a reflection of the algorithm but rather the hosting site itself.
 
-## Features Implemented
-
-### Recommendations
-
-Users can select a city and month to generate a playlist based on historical monthly weather averages.
-
-### Compatibility Scoring
-
-Every song is assigned a numerical compatibility score based on its musical characteristics and the selected weather profile.
-
-### Algorithm Selection
-
-Users can select Merge Sort or Max Heap to rank the songs.
-
-### Adjustable Playlist Size
-
-Users can choose how many songs they want in their generated playlist. Anywhere from 1-1000 out of 100k songs.
-
-### Algorithm Performance Comparison
-
-The application measures the execution time of the selected ranking algorithm and displays the result in milliseconds.
-
-### Public Deployment
-
-The frontend is deployed through GitHub Pages, while the C++ backend is deployed through Render using Docker.
-
-### Dataset Integration
-
-The datasets do not share a common identifier.
-
-Instead, Atmosphere connects them through a custom scoring function.
-
-For a selected city and month, the backend retrieves the corresponding weather profile and calculates a compatibility score for every song.
-
-The resulting collection of `ScoredSong` objects is then ranked using the selected algorithm.
-
 ## Algorithms Implemented
 
 ### Merge Sort
-
-1. Dividing the song collection into smaller halves.
-2. Recursively sorting each half.
-3. Merging the sorted halves into one ranked collection.
-4. Returning a playlist with requested number of songs that contains the highest ranking.
-
-The implementation ranks songs in descending order of compatibility score.
-
-For songs with identical scores, song IDs provide a consistent tie breaking rule.
 
 Implementation:
 
@@ -140,20 +95,6 @@ Implementation:
 - `src/MergeSort.cpp`
 
 ### Heap Sort
-
-Implemented using a Max Heap. A Max Heap is a complete binary tree represented using an array.
-
-The highest-priority song is maintained at the root.
-
-The implementation works by:
-
-1. Inserting scored songs into the heap.
-2. Using `heapifyUp()` to maintain heap order.
-3. Removing the highest ranked song with `extractMax()`.
-4. Using `heapifyDown()` to restore heap order.
-5. Repeating extraction until the requested number of songs has been returned.
-
-The heap uses the same ranking rules as Merge Sort to produce consistent recommendations.
 
 Implementation:
 
