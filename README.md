@@ -8,8 +8,8 @@
 
 **Team Members:**
 - Kyra Paim — GitHub: [@kyrapaim](https://github.com/kyrapaim)
-- Hannah Johns — GitHub: [@hannahpjohns]
-- Yuxuan Tao — GitHub: [@yuxuantao12]
+- Hannah Johns — GitHub: [@hannahpjohns](https://github.com/hannahpjohns)
+- Yuxuan Tao — GitHub: [@yuxuantao12](https://github.com/yuxuantao12)
 
 **Project Repository:** https://github.com/kyrapaim/Atmosphere
 
