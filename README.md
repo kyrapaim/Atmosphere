@@ -47,7 +47,7 @@ Users can choose between two ranking algorithms:
 
 Both algorithms rank songs by compatibility score, allowing users to compare their results and execution times. 
 
----
+
 
 ## Live Application
 
@@ -70,7 +70,7 @@ The application uses a distributed architecture:
 
 **Note:** The Render free hosting plan may spin down after inactivity. The first request after an idle period can take approximately 50 seconds or longer while the server restarts. This is not a reflection of the algorithm but rather the hosting site itself.
 
----
+
 
 ## Features Implemented
 
@@ -98,7 +98,7 @@ The application measures the execution time of the selected ranking algorithm an
 
 The frontend is deployed through GitHub Pages, while the C++ backend is deployed through Render using Docker.
 
----
+
 
 ### Music Dataset
 
@@ -140,7 +140,7 @@ For a selected city and month, the backend retrieves the corresponding weather p
 
 The resulting collection of `ScoredSong` objects is then ranked using the selected algorithm.
 
----
+
 
 ## Algorithms Implemented
 
@@ -214,7 +214,7 @@ The comparator prioritizes:
 
 Using a shared comparator ensures that the two algorithms produce the same ranking order when given identical inputs.
 
----
+
 
 ## Technologies and Libraries
 
@@ -262,7 +262,7 @@ https://github.com/nlohmann/json
 
 The HTTP and JSON library headers are included directly in the repository.
 
----
+
 
 ## Project Structure
 
@@ -313,7 +313,7 @@ Atmosphere/
         └── deploy-pages.yml
 ```
 
----
+
 
 ## How to Run the Project
 
@@ -467,7 +467,7 @@ https://atmosphere-nxj4.onrender.com/recommend
 
 If testing the local backend, temporarily change the request URL in `frontend/results.js` to the local address.
 
----
+
 
 ## API Documentation
 
@@ -581,7 +581,7 @@ curl -X POST https://atmosphere-nxj4.onrender.com/recommend \
   -d '{"city":"Gainesville, Florida","month":"July","count":10,"algorithm":"heap"}'
 ```
 
----
+
 
 ## How to Compare the Performance Between the Algorithms
 
@@ -601,7 +601,7 @@ Execution times may differ because Merge Sort and Max Heap use different operati
 
 Timing results may also vary across computers, server loads, and repeated executions.
 
----
+
 
 ## Deployment Architecture
 
@@ -636,7 +636,7 @@ The backend returns JSON with the weather profile, recommended songs, and algori
 
 CORS headers allow the GitHub Pages frontend to communicate with the Render backend.
 
----
+
 
 ## Troubleshooting
 
@@ -667,7 +667,7 @@ Check that the Docker image builds successfully, the executable starts, and the 
 
 Render's free instance may have spun down due to inactivity. Wait for the service to restart and retry if necessary.
 
----
+
 
 ## References
 
@@ -679,4 +679,4 @@ Render's free instance may have spun down due to inactivity. Wait for the servic
 6. GitHub Pages Documentation — https://docs.github.com/en/pages
 7. Render Documentation — https://render.com/docs
 
----
+
