@@ -15,8 +15,7 @@
 
 **Live Website:** https://kyrapaim.github.io/Atmosphere/
 
-**Video Demonstration:** [Add video link]
-
+**Video Demonstration:** [https://youtu.be/c0AKt93E_Yw](https://youtu.be/c0AKt93E_Yw)
 
 
 ## Project Overview
@@ -40,6 +39,26 @@ Weather Dataset — CORGIS
 
 The goal is to allow users to select a city and month, calculate compatibility scores for all songs based on that location's weather, and return the highest-scoring recommendations. 
 
+### Music Data
+
+File location:
+
+`data/music_100k.csv`
+
+Attributes discussed above are stored using the `Song` structure defined in `include/Song.h`.
+
+### Weather Data
+
+File location:
+
+`data/weather.csv`
+
+The weather data contains historical observations from 2016.
+
+Weather reports are grouped by city, state, and month to calculate monthly averages.
+
+These averages are represented by the `WeatherProfile` structure.
+
 Users can choose between two ranking algorithms:
 
 1. **Merge Sort**
@@ -47,13 +66,9 @@ Users can choose between two ranking algorithms:
 
 Both algorithms rank songs by compatibility score, allowing users to compare their results and execution times. 
 
-
-
 ## Live Application
 
 **Frontend:** https://kyrapaim.github.io/Atmosphere/
-
-**Backend API:** https://atmosphere-nxj4.onrender.com
 
 **API Health Check:** https://atmosphere-nxj4.onrender.com/health
 
@@ -69,8 +84,6 @@ The application uses a distributed architecture:
 8. The frontend displays the playlist and algorithm execution time.
 
 **Note:** The Render free hosting plan may spin down after inactivity. The first request after an idle period can take approximately 50 seconds or longer while the server restarts. This is not a reflection of the algorithm but rather the hosting site itself.
-
-
 
 ## Features Implemented
 
@@ -98,38 +111,6 @@ The application measures the execution time of the selected ranking algorithm an
 
 The frontend is deployed through GitHub Pages, while the C++ backend is deployed through Render using Docker.
 
-
-
-### Music Dataset
-
-**Source:** Million Song Dataset
-
-Website: http://millionsongdataset.com/
-
-The application uses a processed CSV containing approximately 100,000 songs.
-
-File location:
-
-`data/music_100k.csv`
-
-Attributes discussed above are stored using the `Song` structure defined in `include/Song.h`.
-
-### Weather Dataset
-
-**Source:** CORGIS Weather Dataset
-
-Website: https://corgis-edu.github.io/corgis/csv/weather/
-
-File location:
-
-`data/weather.csv`
-
-The weather data contains historical observations from 2016.
-
-Weather reports are grouped by city, state, and month to calculate monthly averages.
-
-These averages are represented by the `WeatherProfile` structure.
-
 ### Dataset Integration
 
 The datasets do not share a common identifier.
@@ -140,15 +121,9 @@ For a selected city and month, the backend retrieves the corresponding weather p
 
 The resulting collection of `ScoredSong` objects is then ranked using the selected algorithm.
 
-
-
 ## Algorithms Implemented
 
 ### Merge Sort
-
-Merge Sort is a divide-and-conquer sorting algorithm.
-
-It works by:
 
 1. Dividing the song collection into smaller halves.
 2. Recursively sorting each half.
@@ -157,11 +132,7 @@ It works by:
 
 The implementation ranks songs in descending order of compatibility score.
 
-For songs with identical scores, song IDs provide a consistent tie-breaking rule.
-
-**Worst-case time complexity:** O(n log n)
-
-**Auxiliary space complexity:** O(n)
+For songs with identical scores, song IDs provide a consistent tie breaking rule.
 
 Implementation:
 
@@ -184,18 +155,6 @@ The implementation works by:
 
 The heap uses the same ranking rules as Merge Sort to produce consistent recommendations.
 
-**Worst-case insertion:** O(log n)
-
-**Worst-case extraction:** O(log n)
-
-**Building the heap using n repeated insertions:** O(n log n)
-
-**Extracting k recommendations:** O(k log n)
-
-**Overall ranking complexity:** O(n log n + k log n)
-
-**Heap storage:** O(n)
-
 Implementation:
 
 - `include/MaxHeap.h`
@@ -213,8 +172,6 @@ The comparator prioritizes:
 2. Smaller lexicographical song IDs when scores are equal.
 
 Using a shared comparator ensures that the two algorithms produce the same ranking order when given identical inputs.
-
-
 
 ## Technologies and Libraries
 
@@ -261,7 +218,6 @@ A C++ JSON library used to parse requests and construct responses.
 https://github.com/nlohmann/json
 
 The HTTP and JSON library headers are included directly in the repository.
-
 
 
 ## Project Structure
@@ -312,7 +268,6 @@ Atmosphere/
     └── workflows/
         └── deploy-pages.yml
 ```
-
 
 
 ## How to Run the Project
@@ -514,7 +469,6 @@ Check that the Docker image builds successfully, the executable starts, and the 
 
 Render's free instance may have spun down due to inactivity. Wait for the service to restart and retry if necessary.
 
-
 ## API Documentation
 
 The backend exposes three endpoints.
@@ -628,7 +582,6 @@ curl -X POST https://atmosphere-nxj4.onrender.com/recommend \
 ```
 
 
-
 ## References
 
 1. Million Song Dataset — http://millionsongdataset.com/
@@ -638,5 +591,3 @@ curl -X POST https://atmosphere-nxj4.onrender.com/recommend \
 5. CMake Documentation — https://cmake.org/documentation/
 6. GitHub Pages Documentation — https://docs.github.com/en/pages
 7. Render Documentation — https://render.com/docs
-
-
