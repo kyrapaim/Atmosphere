@@ -246,7 +246,7 @@ Using a shared comparator ensures that the two algorithms produce the same ranki
 
 **C++ Standard Library**
 
-Used for vectors, strings, hash maps, filesystem operations, sorting-related utilities, and execution timing.
+Used for vectors, strings, hash maps, filesystem operations, developing custom sorting algorithms, and execution timing.
 
 **cpp-httplib**
 
@@ -330,7 +330,7 @@ This is the easiest method and requires no installation.
 2. Select a city.
 3. Select a month.
 4. Select the number of songs.
-5. Choose Merge Sort or Max Heap.
+5. Choose Merge Sort or Heap Sort.
 6. Generate the playlist.
 7. Review the recommendations and algorithm execution time.
 
@@ -467,6 +467,52 @@ https://atmosphere-nxj4.onrender.com/recommend
 
 If testing the local backend, temporarily change the request URL in `frontend/results.js` to the local address.
 
+## How to Compare the Performance Between the Algorithms
+
+To compare Merge Sort and Heap Sort:
+
+1. Select the same city.
+2. Select the same month.
+3. Request the same number of songs.
+4. Generate a playlist using Merge Sort.
+5. Record the execution time.
+6. Repeat using Heap Sort.
+7. Compare the ranking results and execution times.
+
+Because both algorithms use the same compatibility scores and tie-breaking rule, they should return the same ranked recommendations.
+
+Execution times may differ because Merge Sort and Heap Sort use different operations to rank the collection.
+
+Timing results may also vary across computers, server loads, and repeated executions.
+
+## Troubleshooting
+
+### Website Loads but No Songs Appear
+
+- Check whether the Render backend is awake.
+- Open the `/health` endpoint.
+- Verify that `frontend/results.js` uses the correct backend URL.
+- Check the browser's developer console for request errors.
+
+### Backend Cannot Find CSV Files
+
+Run the executable from the repository root.
+
+Verify that both required CSV files are inside the `data/` directory.
+
+### Port 8081 Is Already in Use
+
+Stop any existing instance of `AtmosphereServer` before launching another one.
+
+### Render Deployment Fails
+
+Review the Render deployment logs.
+
+Check that the Docker image builds successfully, the executable starts, and the runtime has the required C++ standard library dependencies.
+
+### First Request Takes a Long Time
+
+Render's free instance may have spun down due to inactivity. Wait for the service to restart and retry if necessary.
 
 
 ## API Documentation
@@ -580,92 +626,6 @@ curl -X POST https://atmosphere-nxj4.onrender.com/recommend \
   -H "Content-Type: application/json" \
   -d '{"city":"Gainesville, Florida","month":"July","count":10,"algorithm":"heap"}'
 ```
-
-
-
-## How to Compare the Performance Between the Algorithms
-
-To compare Merge Sort and Max Heap:
-
-1. Select the same city.
-2. Select the same month.
-3. Request the same number of songs.
-4. Generate a playlist using Merge Sort.
-5. Record the execution time.
-6. Repeat using Max Heap.
-7. Compare the ranking results and execution times.
-
-Because both algorithms use the same compatibility scores and tie-breaking rule, they should return the same ranked recommendations.
-
-Execution times may differ because Merge Sort and Max Heap use different operations to rank the collection.
-
-Timing results may also vary across computers, server loads, and repeated executions.
-
-
-
-## Deployment Architecture
-
-### Frontend — GitHub Pages
-
-The frontend consists of static HTML, CSS, and JavaScript files.
-
-GitHub Actions publishes the `frontend/` directory using:
-
-`.github/workflows/deploy-pages.yml`
-
-
-### Backend — Render
-
-The C++ backend is hosted as a Docker-based Render web service.
-
-The Dockerfile:
-
-1. Creates a Linux build environment.
-2. Installs the necessary build tools.
-3. Compiles the C++ server.
-4. Copies the required datasets.
-5. Starts the server executable.
-
-The backend reads Render's `PORT` environment variable and listens on the appropriate network interface.
-
-### Frontend–Backend Communication
-
-The frontend sends HTTP POST requests containing the user's selections.
-
-The backend returns JSON with the weather profile, recommended songs, and algorithm execution time.
-
-CORS headers allow the GitHub Pages frontend to communicate with the Render backend.
-
-
-
-## Troubleshooting
-
-### Website Loads but No Songs Appear
-
-- Check whether the Render backend is awake.
-- Open the `/health` endpoint.
-- Verify that `frontend/results.js` uses the correct backend URL.
-- Check the browser's developer console for request errors.
-
-### Backend Cannot Find CSV Files
-
-Run the executable from the repository root.
-
-Verify that both required CSV files are inside the `data/` directory.
-
-### Port 8081 Is Already in Use
-
-Stop any existing instance of `AtmosphereServer` before launching another one.
-
-### Render Deployment Fails
-
-Review the Render deployment logs.
-
-Check that the Docker image builds successfully, the executable starts, and the runtime has the required C++ standard library dependencies.
-
-### First Request Takes a Long Time
-
-Render's free instance may have spun down due to inactivity. Wait for the service to restart and retry if necessary.
 
 
 
